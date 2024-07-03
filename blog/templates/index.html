@@ -1,78 +1,83 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
-    <style>
-    body {
-        font-family: "Roboto", sans-serif;
-        font-size: 18px;
-        background-color: #fdfdfd;
-    }
-
-    .head_text {
-        color: white;
-    }
-
-    .card {
-        box-shadow: 0 16px 48px #E3E7EB;
-    }
-    </style>
-    <header class="masthead">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row">
-                <div class=" col-md-8 col-md-10 mx-auto">
-                    <div class="site-heading">
-                        <h3 class=" site-heading my-4 mt-3 text-white">Welcome to my Blog</h3>
-                        <p class="text-light">Follow my journey... &nbsp</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <div id="alert-message"></div>
+  <div class="site-cover site-cover-sm same-height overlay single-page"
+       style="background-image: url('static/images/hero_1.jpg')">
     <div class="container">
-        <div class="row">
-            <!-- Blog Entries Column -->
-            <div class="col-md-8 mt-3 left">
-                {% for post in post_list %}
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h2 class="card-title">
-                                <a href="{% url 'post_detail' post.slug %}"
-                                   class="link-dark  link-offset-1 link-underline link-underline-opacity-0 link-underline-opacity-75-hover">{{ post.title }}</a>
-                            </h2>
-                            <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_on }}</p>
-                            <p class="card-text">{{ post.content|striptags|slice:":200" }}</p>
-                            <a href="{% url 'post_detail' post.slug %}" class="btn btn-primary">Read More &rarr;</a>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-            {% block sidebar %}
-                {% include 'sidebar.html' %}
-            {% endblock sidebar %}
+      <div class="row same-height justify-content-center">
+        <div class="col-md-12 col-lg-10">
+          <div class="post-entry text-center">
+            <h1 class="mb-4">
+              <a href="#">Welcome to my Blog</a>
+            </h1>
+          </div>
         </div>
+      </div>
     </div>
-    {% if is_paginated %}
-        <nav aria-label="Page navigation conatiner">
-        </nav>
-        <ul class="pagination justify-content-center">
-            {% if page_obj.has_previous %}
-                <li>
-                    <a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV</a>
+  </div>
+  <!-- posts -->
+  <section class="site-section py-lg">
+    <div class="container">
+      <div class="row blog-entries element-animate mb-5">
+        <div class="col-md-12 col-lg-8 main-content">
+          {% for post in post_list %}
+            <div class="entry2 mb-5 pt-2">
+              <a href="{% url 'post_detail' post.slug %}">
+                <img src="static/images/img_1.jpg" alt="Image" class="img-fluid rounded">
+              </a>
+              <h2>
+                <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
+              </h2>
+              <div class="post-meta align-items-center text-left clearfix">
+                <figure class="author-figure mb-2 mr-3 float-left">
+                  <img src="static/images/person_1.jpg" alt="Image" class="img-fluid">
+                </figure>
+                <span class="d-inline-block mt-1">By <a href="#">{{ post.author }}</a></span>
+                <span>&nbsp;-&nbsp;  {{ post.date_published|date:"F d, Y" }}</span>
+              </div>
+              <p>{{ post.content|striptags|slice:":200" }}</p>
+            </div>
+          {% endfor %}
+          <!-- Page navigation -->
+          <nav aria-label="Page navigation" class="d-flex justify-content-center">
+            <ul class="pagination">
+              {% if page_obj.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">begin</span>
+                  </a>
                 </li>
-            {% endif %}
-            {% if page_obj.has_next %}
-                <li>
-                    <a href="?page={{ page_obj.next_page_number }}" class="page-link">NEXT &raquo;</a>
+              {% endif %}
+              {% for n in page_obj.paginator.page_range %}
+                {% if page_obj.number == n %}
+                  <li class="page-item active">
+                    <span class="page-link">{{ n }}<span class="sr-only">(current)</span></span>
+                  </li>
+                {% elif n > page_obj.number|add:'-3' and n < page_obj.number|add:'3' %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ n }}">{{ n }}</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+              {% if page_obj.has_next %}
+                <li class="page-item">
+                  <a class="page-link"
+                     href="?page={{ page_obj.paginator.num_pages }}"
+                     aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">end</span>
+                  </a>
                 </li>
-            {% endif %}
-        </ul>
-    {% endif %}
-    {% if messages %}
-        <ul id="password-reset-messages" class="messages" style="display: none;">
-            {% for message in messages %}
-                <li {% if message.tags %}class="message {{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+        <!-- END main-content -->
+        {% block sidebar %}
+          {% include 'sidebar.html' %}
+        {% endblock sidebar %}
+      </div>
+    </div>
+  </section>
 {% endblock %}

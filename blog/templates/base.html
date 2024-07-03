@@ -1,84 +1,162 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>My Blog</title>
-        <link href="/static/django_ckeditor_5/dist/styles.css"
-              media="all"
-              rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700"
-              rel="stylesheet">
-        <meta name="google" content="notranslate" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-              rel="stylesheet"
-              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'styles.css' %}">
-    </head>
-    <body>
-        <!-- Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow"
-             id="mainNav">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'home' %}">Blog Title</a>
-                <button class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNavDropdown"
-                        aria-controls="navbarNavDropdown"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item text-black">
-                            <a class="nav-link text-black font-weight-bold" href="#">About</a>
-                        </li>
-                        <li class="nav-item text-black">
-                            <a class="nav-link text-black font-weight-bold" href="#">Contact</a>
-                        </li>
-                        {% if request.user.is_authenticated %}
-                            <li class="nav-item text-black">
-                                <a class="nav-link text-black font-weight-bold"
-                                   href="{% url 'change_password' %}">Hello {{ request.user.username }}!!</a>
-                            </li>
-                            <li class="nav-item text-black">
-                                <a class="nav-link text-black font-weight-bold"
-                                   href="{% url 'logout' %}">Logout</a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item text-black">
-                                <a class="nav-link text-black font-weight-bold" href="{% url 'login' %}">Login</a>
-                            </li>
-                            <li class="nav-item text-black">
-                                <a class="nav-link text-black font-weight-bold"
-                                   href="{% url 'register' %}">Register</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
+<html lang="en">
+  
+  <head>
+    <title>Tijesu's blog</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700|Playfair+Display:400,700,900"
+          rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+  </head>
+  <body class="post-list">
+    <div class="site-wrap">
+      <div class="site-mobile-menu">
+        <div class="site-mobile-menu-header">
+          <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
+          </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+      </div>
+      <header class="site-navbar pt-3" role="banner">
+        <div class="container-fluid">
+          <div class="row align-items-center">
+            <div class="col-6 col-xl-6 logo">
+              <h1 class="mb-0">
+                <a href="" class="text-black h2 mb-0">Tj's corner</a>
+              </h1>
             </div>
-        </nav>
+            <div class="col-6 mr-auto py-3 text-right"
+                 style="position: relative;
+                        top: 3px">
+              <div class="social-icons d-inline">
+                <a href="#"><span class="icon-facebook"></span></a>
+                <a href="#"><span class="icon-twitter"></span></a>
+                <a href="#"><span class="icon-instagram"></span></a>
+              </div>
+              <a href="#"
+                 class="site-menu-toggle js-menu-toggle text-black d-inline-block d-xl-none"><span class="icon-menu h3"></span></a>
+            </div>
+          </div>
+          <div class="col-12 d-none d-xl-block border-top">
+            <nav class="site-navigation text-center " role="navigation">
+              <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block mb-0">
+                <li>
+                  <a href="index.html">Homepage</a>
+                </li>
+                <li>
+                  <a href="category.html">Latest</a>
+                </li>
+                <li>
+                  <a href="category.html">About me</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                <li class="nav-item text-black">
+                    <a class="nav-link text-black font-weight-bold"
+                       href="{% url 'change_password' %}">Hello {{ request.user.username }}!!</a>
+                </li>
+                <li class="nav-item text-black">
+                    <a class="nav-link text-black font-weight-bold"
+                       href="{% url 'logout' %}">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item text-black">
+                    <a class="nav-link text-black font-weight-bold" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item text-black">
+                    <a class="nav-link text-black font-weight-bold"
+                       href="{% url 'register' %}">Register</a>
+                </li>
+            {% endif %}
+
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
         {% block content %}
             <!-- Content Goes here -->
         {% endblock content %}
         <!-- Footer -->
-        <footer class="py-3 bg-grey">
-            <p class="m-0 text-dark text-center ">Copyright &copy; developer</p>
-        </footer>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-                crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-                integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-                crossorigin="anonymous"
-                referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tools/1.2.7/jquery.tools.min.js"
-                integrity="sha512-sV15SgKJmAotz/5w617K9C4qN4Wj3YMk9Xf65+jzgQmPqfjwSPbwwQKdWE1hj/WjDGESqbqh4YCfL/tHgTc+EQ=="
-                crossorigin="anonymous"
-                referrerpolicy="no-referrer"></script>
-        <script src="{% static 'script.js' %}"></script>
+    <!-- Footer -->
+    <div class="site-footer">
+        <div class="container">
+          <div class="row mb-5">
+            <div class="col-md-4">
+              <h3 class="footer-heading mb-4">About me</h3>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat reprehenderit magnam deleniti quasi saepe, consequatur atque sequi delectus dolore veritatis obcaecati quae, repellat eveniet omnis, voluptatem in. Soluta, eligendi, architecto.
+              </p>
+            </div>
+            <div class="col-md-3 ml-auto">
+              <h3 class="footer-heading mb-4">Quick Menu</h3>
+              <ul class="list-unstyled float-left mr-5">
+                <li>
+                  <a href="#">About me</a>
+                </li>
+                <li>
+                  <a href="#">Latest post</a>
+                </li>
+                <li>
+                  <a href="#">Join us</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-4">
+              <div class="mb-5">
+                <h3 class="footer-heading mb-4">Subscribe to my newsletter</h3>
+                <form action="" method="post" class="form-footer-subscribe">
+                  <div class="form-group d-flex">
+                    <input type="text" class="form-control">
+                    <input type="submit" class="btn btn-primary text-white" value="Subscribe">
+                  </div>
+                </form>
+              </div>
+              <div>
+                <h3 class="footer-heading mb-4">Connect With Me</h3>
+                <p>
+                  <a href="#"><span class="icon-facebook pt-2 pr-2 pb-2 pl-0"></span></a>
+                  <a href="#"><span class="icon-twitter p-2"></span></a>
+                  <a href="#"><span class="icon-instagram p-2"></span></a>
+                  <a href="#"><span class="icon-rss p-2"></span></a>
+                  <a href="#"><span class="icon-envelope p-2"></span></a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 text-center">
+              <p>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | This template was made with <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+      <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+      <script src="{% static 'js/jquery-ui.js' %}"></script>
+      <script src="{% static 'js/popper.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap.min.js' %}"></script>
+      <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+      <script src="{% static 'js/aos.js' %}"></script>
+      <script src="{% static 'js/main.js' %}"></script>
+      <script src="{% static 'script.js' %}"></script>
     </body>
-</html>
+  </html>

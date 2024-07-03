@@ -19,6 +19,10 @@
     <link rel="stylesheet" href="{% static 'css/aos.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    {% block extra-styles %}
+    
+{% endblock extra-styles %}
+
   </head>
   <body class="post-list">
     <div class="site-wrap">
@@ -35,7 +39,7 @@
           <div class="row align-items-center">
             <div class="col-6 col-xl-6 logo">
               <h1 class="mb-0">
-                <a href="" class="text-black h2 mb-0">Tj's corner</a>
+                <a href="{% url 'home' %}" class="text-black h2 mb-0">Tj's corner</a>
               </h1>
             </div>
             <div class="col-6 mr-auto py-3 text-right"
@@ -54,13 +58,13 @@
             <nav class="site-navigation text-center " role="navigation">
               <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block mb-0">
                 <li>
-                  <a href="index.html">Homepage</a>
+                  <a href="{% url 'home' %}">Homepage</a>
                 </li>
                 <li>
-                  <a href="category.html">Latest</a>
+                  <a href="">Latest</a>
                 </li>
                 <li>
-                  <a href="category.html">About me</a>
+                  <a href="#">About me</a>
                 </li>
                 {% if request.user.is_authenticated %}
                 <li class="nav-item text-black">
@@ -158,5 +162,8 @@
       <script src="{% static 'js/aos.js' %}"></script>
       <script src="{% static 'js/main.js' %}"></script>
       <script src="{% static 'script.js' %}"></script>
+      {% block extra-scripts %}
+    
+      {% endblock extra-scripts %}
     </body>
   </html>

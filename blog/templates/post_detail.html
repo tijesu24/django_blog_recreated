@@ -1,59 +1,82 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
     {% load crispy_forms_tags %}
-    <div class="container  ">
-        <div class="row justify-content-center">
-            <div class="col-xl-8 card mb-4  mt-3 top">
-                <div class="card-body">
-                    <h1>
-                        {% block title %}
-                            {{ post.title }}
-                        {% endblock title %}
-                    </h1>
-                    <p class=" text-muted">{{ post.author }} | {{ post.created_on }}</p>
-                    {% if post.cover_image.url is not None %}
-                        <img src="{{ MEDIA_URL }}{{ post.cover_image.url }}"
-                             class="img-fluid"
-                             id="cover-photo" />
-                    {% endif %}
-                </div>
-                <div class="card-text px-3 ck-content">{{ post.content | safe }}</div>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-xl-8 card mb-4  mt-3 ">
-                <div class="card-body">
-                    <!-- comments -->
-                    <h2>{{ comments.count }} comments</h2>
-                    {% for comment in comments %}
-                        <hr class="hr my-1">
-                        <div class="comments px-3 py-2">
-                            <p class="font-weight-bold">
-                                {{ comment.name }}
-                                <span class=" text-muted font-weight-normal">{{ comment.created_on }}</span>
-                            </p>
-                            {{ comment.body | linebreaks }}
+    <div class="site-cover site-cover-sm same-height overlay single-page"
+         style="background-image: url('{{ MEDIA_URL }}{{ post.cover_image.url }}')">
+        <div class="container">
+            <div class="row same-height justify-content-center">
+                <div class="col-md-12 col-lg-10">
+                    <div class="post-entry text-center">
+                        <h1 class="mb-4">{{ post.title }}</h1>
+                        <div class="post-meta align-items-center text-center">
+                            <figure class="author-figure mb-0 mr-3 d-inline-block">
+                                <img src="/static/images/person_1.jpg" alt="Image" class="img-fluid">
+                            </figure>
+                            <span class="d-inline-block mt-1">By {{ post.author }}</span>
+                            <span>&nbsp;-&nbsp; {{ post.created_on }}</span>
                         </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-xl-8 card mb-4  mt-3 ">
-                <div class="card-body">
-                    {% if new_comment %}
-                        <div class="alert alert-success" role="alert">Your comment is awaiting moderation</div>
-                    {% else %}
-                        <h3>Leave a comment</h3>
-                        <form method="post" style="margin-top: 1.3em;">
-                            {{ comment_form | crispy }}
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
-                        </form>
-                    {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <section class="site-section py-lg mx-3">
+        <div class="container">
+            <div class="row blog-entries element-animate">
+                <div class="col-md-12 col-lg-8 main-content">
+                    <div class="post-content-body ck-content">{{ post.content | safe }}</div>
+                    <div class="pt-5">
+                        <p>
+                            Categories:  <a href="#">Django</a>, <a href="#">Python</a>  Tags: <a href="#">#tbupdated</a>,
+                        </p>
+                    </div>
+                    <div class="pt-5">
+                        <h3 class="mb-5">{{ comments.count }}  Comments</h3>
+                        <ul class="comment-list">
+                            {% for comment in comments %}
+                                <li class="comment">
+                                    <div class="vcard">
+                                        <img src="/static/images/person_1.jpg" alt="Image placeholder">
+                                    </div>
+                                    <div class="comment-body">
+                                        <h3>{{ comment.name }}</h3>
+                                        <div class="meta">{{ comment.created_on }}</div>
+                                        {{ comment.body | linebreaks }}
+                                        <p>
+                                            <a href="#" class="reply rounded">Reply</a>
+                                        </p>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <!-- END comment-list -->
+                        <div class="comment-form-wrap pt-5">
+                            {% if new_comment %}
+                                <div class="alert alert-success" role="alert">Your comment is awaiting moderation</div>
+                            {% else %}
+                                <h3 class="mb-5">Leave a comment</h3>
+                                <form method="post" class="p-5 bg-light">
+                                    {{ comment_form | crispy }}
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary ">Post Comment</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% block sidebar %}
+                    {% include 'sidebar.html' %}
+                {% endblock sidebar %}
+            </div>
+        </div>
+    </section>
 {% endblock content %}
+{% block extra-styles %}
+    <link rel="stylesheet" href="{% static 'css/prism.css' %}">
+    
+{% endblock extra-styles %}
+{% block extra-scripts %}
+    <script src="{% static 'js/prism.js' %}"></script>
+{% endblock extra-scripts %}

@@ -23,9 +23,9 @@
           {% for post in post_list %}
             <div class="entry2 mb-5 pt-2">
               <a href="{% url 'post_detail' post.slug %}">
-                <img src="static/images/img_1.jpg" alt="Image" class="img-fluid rounded">
+                <img src="{{ MEDIA_URL }}{{ post.cover_image.url }}" alt="Image" class="img-fluid rounded">
               </a>
-              <h2>
+              <h2 class="mt-2">
                 <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
               </h2>
               <div class="post-meta align-items-center text-left clearfix">

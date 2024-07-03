@@ -29,7 +29,7 @@ from django.shortcuts import render, get_object_or_404
 class PostList(generic.ListView):
     queryset = Post.objects.filter(status=1).order_by('-created_on')
     template_name = "index.html"
-    paginate_by = 6 
+    paginate_by = 6
 
 
 def post_detail(request, slug):
@@ -150,7 +150,5 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     success_url = reverse_lazy('home')
 
 
-class NewPostList(generic.ListView):
-    queryset = Post.objects.filter(status=1).order_by('-created_on')
-    template_name = "new_index.html"
-    paginate_by = 2
+def test_page(request):
+    return render(request, 'single.html')

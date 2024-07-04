@@ -30,7 +30,7 @@
               </h2>
               <div class="post-meta align-items-center text-left clearfix">
                 <figure class="author-figure mb-2 mr-3 float-left">
-                  <img src="static/images/person_1.jpg" alt="Image" class="img-fluid">
+                  <img src="{% static 'images/person_1.jpg' %}" alt="Image" class="img-fluid">
                 </figure>
                 <span class="d-inline-block mt-1">By <a href="#">{{ post.author }}</a></span>
                 <span>&nbsp;-&nbsp;  {{ post.date_published|date:"F d, Y" }}</span>

@@ -25,7 +25,7 @@ class Post(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=STATUS, default=0)
     date_published = models.DateTimeField(null=True, blank=True)  # New field
-
+    more_pic = models.ImageField(null=True, blank=True)
 
     class Meta:
         ordering = ['-created_on']

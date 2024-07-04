@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-i+7)u3!%$$9rih73huq2+6lj*8wz3e)zk58e&cu4@rw*^(13iw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['django-env.eba-dtkmcjvg.af-south-1.elasticbeanstalk.com',  '127.0.0.1']
+ALLOWED_HOSTS = ['django-env.eba-dtkmcjvg.af-south-1.elasticbeanstalk.com',  '127.0.0.1', 
+                 '172.31.28.244']
 
 
 # Application definition
@@ -168,8 +169,15 @@ AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
 # s3 static settings
 AWS_LOCATION = 'static'
 
+# For serving static files directly from S3
+AWS_S3_URL_PROTOCOL = 'https'
+AWS_S3_USE_SSL = True
+AWS_S3_VERIFY = True
+
 MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
-MEDIA_URL = '/media/'
+# MEDIA_URL = '/media/'
+MEDIA_URL = f'{AWS_S3_URL_PROTOCOL}://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
 
 customColorPalette = [
     {

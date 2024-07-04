@@ -162,17 +162,13 @@ AWS_SECRET_ACCESS_KEY = str(os.getenv('AWS_SECRET_ACCESS_KEY'))
 AWS_STORAGE_BUCKET_NAME = str(os.getenv('AWS_STORAGE_BUCKET_NAME'))
 
 
-# Optional: Control the file access permissions
-AWS_DEFAULT_ACL = 'public-read'  # Allows files uploaded to S3 to be publicly readable
+AWS_DEFAULT_ACL = 'public-read'
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+# s3 static settings
+AWS_LOCATION = 'static'
 
-# For serving static files directly from S3
-AWS_S3_URL_PROTOCOL = 'https'
-AWS_S3_USE_SSL = True
-AWS_S3_VERIFY = True
-# MEDIA_URL = f'{AWS_S3_URL_PROTOCOL}://{AWS_S3_CUSTOM_DOMAIN}/media/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'blog/media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
 MEDIA_URL = '/media/'
 
 customColorPalette = [

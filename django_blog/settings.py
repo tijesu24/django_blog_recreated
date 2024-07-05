@@ -30,6 +30,10 @@ DEBUG = True
 ALLOWED_HOSTS = ['django-env.eba-dtkmcjvg.af-south-1.elasticbeanstalk.com',  '127.0.0.1', 
                  '172.31.28.244']
 
+# Add hosts from environment variable
+allowed_hosts_env = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
+ALLOWED_HOSTS.extend(allowed_hosts_env)
+
 
 # Application definition
 

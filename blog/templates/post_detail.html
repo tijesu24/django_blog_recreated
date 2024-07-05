@@ -15,7 +15,7 @@
                                      alt="Image"
                                      class="img-fluid">
                             </figure>
-                            <span class="d-inline-block mt-1">By {{ post.author }}</span>
+                            <span class="d-inline-block mt-1">By {{ post.author.first_name|default:post.author.username  }}</span>
                             <span>&nbsp;-&nbsp; {{ post.created_on }}</span>
                         </div>
                     </div>

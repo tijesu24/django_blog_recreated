@@ -29,11 +29,11 @@
                 <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
               </h2>
               <div class="post-meta align-items-center text-left clearfix">
-                <figure class="author-figure mb-2 mr-3 float-left">
-                  <img src="{% static 'images/person_1.jpg' %}" alt="Image" class="img-fluid">
+                <!--<figure class="author-figure mb-2 mr-3 float-left">
+                  <img src="{% static 'images/obs_2022_a2-230_crop.jpg__210x208_q85_subsampling-2_upscale.jpg' %}" alt="Image" class="img-fluid">
                 </figure>
-                <span class="d-inline-block mt-1">By <a href="#">{{ post.author.first_name|default:post.author.username  }}</a></span>
-                <span>&nbsp;-&nbsp;  {{ post.date_published|date:"F d, Y" }}</span>
+                 <span class="d-inline-block mt-1">By <a href="#">{{ post.author.first_name|default:post.author.username  }}</a></span> &nbsp;-&nbsp; -->
+                <span> {{ post.date_published|date:"F d, Y" }}</span>
               </div>
               <p>{{ post.content|striptags|slice:":200" }}</p>
             </div>

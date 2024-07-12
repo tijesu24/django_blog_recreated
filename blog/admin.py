@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, Group
 from django.contrib import admin
 from .models import Post, Comment
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 
 # Register your models here.
 
@@ -22,7 +23,7 @@ class PostAdmin(admin.ModelAdmin):
 
     inlines = [CommentInline]
 
-    readonly_fields = ('date_published',)
+    # readonly_fields = ('date_published',)
 
     def has_change_permission(self, request, obj=None):
         if obj and request.user.has_perm('blog.change_post'):
@@ -38,9 +39,13 @@ class PostAdmin(admin.ModelAdmin):
 
     def publish_publication(self, request, queryset):
         queryset.update(status=1)
+        queryset.update(date_published = timezone.now())
+        
 
     def send_publication_to_drafts(self, request, queryset):
         queryset.update(status=0)
+        queryset.update(date_published = None)
+
 
 
 admin.site.register(Post, PostAdmin)
